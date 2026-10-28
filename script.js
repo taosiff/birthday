@@ -1416,7 +1416,7 @@ function initGalaxy() {
   if (!starsLayer) return;
 
   const REASONS = [
-    { icon: "✨", text: "Your smile — it genuinely makes my whole day brighter." },
+    { icon: "✨", text: "Your smile, it genuinely makes my whole day brighter." },
     { icon: "💖", text: "The sweetest heart. You're truly my favorite person in the world." },
     { icon: "🌸", text: "The way you laugh without even trying. Honestly my favorite sound." },
     { icon: "🌟", text: "Effortlessly stunning, always. You don't even have to try." },
