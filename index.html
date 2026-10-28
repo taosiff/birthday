@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>To My Beloved — A Birthday Ode of Endless Wonder ✨</title>
+  <meta name="description" content="A timeless anthology of devotion, celestial poetry, and quiet wonders, composed with boundless love for the sovereign of my heart.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Lato:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+  <!-- Canvas Confetti & Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Canvases -->
+  <canvas id="webgl-canvas"></canvas>
+  <canvas id="sparkle-canvas"></canvas>
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Floating Music Player -->
+  <div class="music-player-bar hidden" id="musicPlayer">
+    <div class="vinyl-disc" id="vinylDisc">
+      <div class="vinyl-center"></div>
+    </div>
+    <div class="music-info">
+      <span class="music-title">A Gentle Nocturne 🎵</span>
+      <div class="music-waveform" id="musicWaveform">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <button class="music-btn" id="toggleMusicBtn" aria-label="Play/Pause Music">
+      <svg id="playIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+      <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+        <rect x="6" y="4" width="4" height="16"></rect>
+        <rect x="14" y="4" width="4" height="16"></rect>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Cute Mascot -->
+  <div class="cute-mascot-container hidden" id="mascot">
+    <div class="mascot-speech" id="mascotSpeech">A most radiant birthday to thee, my lady! 💖</div>
+    <svg class="mascot-svg" viewBox="0 0 120 120" width="80" height="80">
+      <path d="M40,55 Q35,80 50,85" stroke="#ff8da1" stroke-width="2" fill="none" stroke-dasharray="2,2"/>
+      <g transform="translate(18, 5) scale(0.65)">
+        <path d="M40,10 C20,10 10,25 10,45 C10,70 40,85 40,90 C40,85 70,70 70,45 C70,25 60,10 40,10 Z" fill="url(#balloonGradM)" />
+        <polygon points="36,88 44,88 40,93" fill="#ff6b8b"/>
+      </g>
+      <ellipse cx="65" cy="85" rx="30" ry="26" fill="#FFFDF9" stroke="#F6D5DC" stroke-width="2"/>
+      <ellipse cx="50" cy="40" rx="9" ry="24" fill="#FFFDF9" stroke="#F6D5DC" stroke-width="2" transform="rotate(-15 50 40)"/>
+      <ellipse cx="50" cy="40" rx="5" ry="16" fill="#FFCCD5" transform="rotate(-15 50 40)"/>
+      <ellipse cx="78" cy="40" rx="9" ry="24" fill="#FFFDF9" stroke="#F6D5DC" stroke-width="2" transform="rotate(15 78 40)"/>
+      <ellipse cx="78" cy="40" rx="5" ry="16" fill="#FFCCD5" transform="rotate(15 78 40)"/>
+      <circle cx="64" cy="65" r="24" fill="#FFFDF9" stroke="#F6D5DC" stroke-width="2"/>
+      <circle cx="51" cy="71" r="5" fill="#FFB3C1" opacity="0.6"/>
+      <circle cx="77" cy="71" r="5" fill="#FFB3C1" opacity="0.6"/>
+      <circle cx="54" cy="64" r="3.2" fill="#422736"/>
+      <circle cx="55.5" cy="62.5" r="1.2" fill="#FFF"/>
+      <circle cx="74" cy="64" r="3.2" fill="#422736"/>
+      <circle cx="75.5" cy="62.5" r="1.2" fill="#FFF"/>
+      <ellipse cx="64" cy="68" rx="2.5" ry="1.8" fill="#FF8FA3"/>
+      <path d="M61,71 Q64,74 67,71" stroke="#422736" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <circle cx="64" cy="48" r="4" fill="#FFE066"/>
+      <circle cx="56" cy="49" r="3.5" fill="#FF85A1"/>
+      <circle cx="72" cy="49" r="3.5" fill="#FF85A1"/>
+      <defs>
+        <linearGradient id="balloonGradM" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#FF9EAA"/>
+          <stop offset="100%" stop-color="#FF4D6D"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Personalize Button -->
+  <button class="settings-wand-btn hidden" id="openSettingsBtn" title="Personalize">
+    <span class="wand-icon">✨</span>
+    <span class="wand-text">Personalize</span>
+  </button>
+
+  <!-- Main Site Wrapper -->
+  <div class="site-wrapper" id="siteWrapper">
+
+    <!-- ==================== SECTION 1: FIREWORKS + BIRTHDAY TEXT INTRO ==================== -->
+    <section class="story-scene intro-section" id="introSection">
+      <div class="page1-glow-ambience"></div>
+      <canvas id="fireworksCanvas"></canvas>
+      <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- ==================== SECTION 2: PHOTO 2 SHOWCASE ==================== -->
+    <section class="story-scene photo-scene reveal-section" id="photo2Section">
+      <div class="photo-ambient-blur" style="background-image: url('assets/photo2.jpeg');"></div>
+      <div class="photo-fullscreen-wrap">
+        <div class="photo-floating-hearts">
+          <span class="fh fh-1">💖</span>
+          <span class="fh fh-2">✨</span>
+          <span class="fh fh-3">🌸</span>
+          <span class="fh fh-4">💕</span>
+          <span class="fh fh-5">👑</span>
+        </div>
+        <div class="photo-frame-card">
+          <img src="assets/photo2.jpeg" alt="The Birthday Queen" class="fullscreen-photo">
+        </div>
+        <div class="photo-caption-overlay">
+          <h2>My Fav Gurl ✨</h2>
+        </div>
+        <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: PHOTO 1 SHOWCASE ==================== -->
+    <section class="story-scene photo-scene reveal-section" id="photo1Section">
+      <div class="photo-ambient-blur" style="background-image: url('assets/photo1.PNG');"></div>
+      <div class="photo-fullscreen-wrap">
+        <div class="photo-floating-hearts">
+          <span class="fh fh-1">🌸</span>
+          <span class="fh fh-2">💖</span>
+          <span class="fh fh-3">✨</span>
+          <span class="fh fh-4">💗</span>
+          <span class="fh fh-5">🌸</span>
+        </div>
+        <div class="photo-frame-card">
+          <img src="assets/photo1.PNG" alt="Simply Stunning" class="fullscreen-photo">
+        </div>
+        <div class="photo-caption-overlay">
+          <h2>My Beloved's Day 🌸</h2>
+        </div>
+        <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: 3D CAKE CEREMONY ==================== -->
+    <section class="story-scene stage-scene reveal-section" id="cakeSection">
+      <div class="stage-header">
+        <h2 class="section-title">Here's Your Virtual Cake, Love 🎂</h2>
+      </div>
+      <div class="cake-stage-container">
+        <iframe id="cakeIframe" src="stuffs/birthday-Cake/birthday-Cake/project-1/birthday-cake.html" class="interactive-stage-iframe" scrolling="no" frameborder="0" title="Birthday Cake" allow="autoplay"></iframe>
+      </div>
+      <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- ==================== SECTION 5: FLOWER GARDEN ==================== -->
+    <section class="story-scene stage-scene reveal-section" id="flowerSection">
+      <div class="stage-header">
+        <h2 class="section-title">Flower for My Flower 🌸</h2>
+      </div>
+      <div class="flower-stage-container">
+        <iframe id="flowerIframe" src="stuffs/garden-main/garden-main/index.html?to=Rumnaz&from=Taosif" class="interactive-stage-iframe" scrolling="no" frameborder="0" title="Flower Garden" allow="autoplay"></iframe>
+      </div>
+      <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- SCENE 2: BALLOONS -->
+    <section class="section-container story-scene balloon-pop-ceremony reveal-section" id="balloonPopSection">
+      <div class="section-badge">🎈 Whispers on the Breeze</div>
+      <h2 class="section-title balloon-pop-heading">Four Floating Keepsakes</h2>
+      <div class="balloons-four-grid" id="fourBalloonsGrid">
+        <div class="balloon-pop-card" data-index="0" data-word="Thou" id="balloonCard0">
+          <div class="balloon-pop-visual balloon-blue" id="balloonVisual0">
+            <div class="balloon-gloss"></div>
+            <div class="balloon-knot-area">
+              <div class="balloon-bow-svg">
+                <svg viewBox="0 0 46 22" width="38" height="18"><path d="M23,11 C17,0 2,2 5,13 C8,21 20,13 23,11 C26,13 38,21 41,13 C44,2 29,0 23,11 Z" fill="#93C5FD"/><circle cx="23" cy="11" r="3" fill="#3B82F6"/></svg>
+              </div>
+              <svg class="balloon-string-svg" viewBox="0 0 30 70" width="26" height="58"><path d="M15,0 C6,18 24,32 10,48 C2,58 20,64 14,70" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,2"/></svg>
+            </div>
+          </div>
+          <div class="balloon-revealed-word hidden" id="balloonWord0">
+            <span class="word-emoji">✨</span><span class="word-text">Thou</span>
+          </div>
+        </div>
+        <div class="balloon-pop-card" data-index="1" data-word="Art" id="balloonCard1">
+          <div class="balloon-pop-visual balloon-pink" id="balloonVisual1">
+            <div class="balloon-gloss"></div>
+            <div class="balloon-knot-area">
+              <div class="balloon-bow-svg">
+                <svg viewBox="0 0 46 22" width="38" height="18"><path d="M23,11 C17,0 2,2 5,13 C8,21 20,13 23,11 C26,13 38,21 41,13 C44,2 29,0 23,11 Z" fill="#FCA5A5"/><circle cx="23" cy="11" r="3" fill="#EC4899"/></svg>
+              </div>
+              <svg class="balloon-string-svg" viewBox="0 0 30 70" width="26" height="58"><path d="M15,0 C24,16 6,34 20,50 C10,60 22,66 16,70" fill="none" stroke="#F472B6" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,2"/></svg>
+            </div>
+          </div>
+          <div class="balloon-revealed-word hidden" id="balloonWord1">
+            <span class="word-emoji">💖</span><span class="word-text">Art</span>
+          </div>
+        </div>
+        <div class="balloon-pop-card" data-index="2" data-word="Endlessly" id="balloonCard2">
+          <div class="balloon-pop-visual balloon-green" id="balloonVisual2">
+            <div class="balloon-gloss"></div>
+            <div class="balloon-knot-area">
+              <div class="balloon-bow-svg">
+                <svg viewBox="0 0 46 22" width="38" height="18"><path d="M23,11 C17,0 2,2 5,13 C8,21 20,13 23,11 C26,13 38,21 41,13 C44,2 29,0 23,11 Z" fill="#86EFAC"/><circle cx="23" cy="11" r="3" fill="#10B981"/></svg>
+              </div>
+              <svg class="balloon-string-svg" viewBox="0 0 30 70" width="26" height="58"><path d="M15,0 C8,20 25,36 12,52 C5,62 19,66 14,70" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,2"/></svg>
+            </div>
+          </div>
+          <div class="balloon-revealed-word hidden" id="balloonWord2">
+            <span class="word-emoji">🌸</span><span class="word-text">Endlessly</span>
+          </div>
+        </div>
+        <div class="balloon-pop-card" data-index="3" data-word="Adored" id="balloonCard3">
+          <div class="balloon-pop-visual balloon-purple" id="balloonVisual3">
+            <div class="balloon-gloss"></div>
+            <div class="balloon-knot-area">
+              <div class="balloon-bow-svg">
+                <svg viewBox="0 0 46 22" width="38" height="18"><path d="M23,11 C17,0 2,2 5,13 C8,21 20,13 23,11 C26,13 38,21 41,13 C44,2 29,0 23,11 Z" fill="#D8B4FE"/><circle cx="23" cy="11" r="3" fill="#A855F7"/></svg>
+              </div>
+              <svg class="balloon-string-svg" viewBox="0 0 30 70" width="26" height="58"><path d="M15,0 C22,18 8,34 20,50 C12,62 22,66 16,70" fill="none" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,2"/></svg>
+            </div>
+          </div>
+          <div class="balloon-revealed-word hidden" id="balloonWord3">
+            <span class="word-emoji">👑</span><span class="word-text">Adored</span>
+          </div>
+        </div>
+      </div>
+      <div class="balloon-all-popped-banner hidden glass-card" id="balloonPoppedBanner">
+        <div class="banner-crown-icon">👑✨</div>
+        <h3 class="banner-words-reveal">"Thou Art Endlessly Adored" 💖</h3>
+        <p class="banner-words-sub">Through every fleeting hour, every turning season, and into eternity.</p>
+      </div>
+      <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- SCENE 3: PHOTO MEMORIES SLIDESHOW -->
+    <section class="section-container story-scene reveal-section" id="memoriesSection">
+      <div class="photo-slideshow-container">
+        <div class="slide-track" id="slideTrack">
+          <div class="photo-slide active" data-slide="0">
+            <div class="slide-inner-clean">
+              <img src="assets/her1.jpeg" alt="Her Portrait 1" class="slide-photo-clean">
+              <p class="slide-caption-clean" id="slideCaption0">Such a heavenly view you are ✨</p>
+            </div>
+          </div>
+          <div class="photo-slide" data-slide="1">
+            <div class="slide-inner-clean">
+              <img src="assets/her2.jpeg" alt="Her Portrait 2" class="slide-photo-clean">
+              <p class="slide-caption-clean" id="slideCaption1">Prettier than the flowers in your hands 🌸</p>
+            </div>
+          </div>
+          <div class="photo-slide" data-slide="2">
+            <div class="slide-inner-clean">
+              <img src="assets/her3.jpeg" alt="Her Portrait 3" class="slide-photo-clean">
+              <p class="slide-caption-clean" id="slideCaption2">That look right there could stop my heart ✨</p>
+            </div>
+          </div>
+          <div class="photo-slide" data-slide="3">
+            <div class="slide-inner-clean">
+              <img src="assets/her4.jpeg" alt="Her Portrait 4" class="slide-photo-clean">
+              <p class="slide-caption-clean" id="slideCaption3">How are you this effortlessly stunning? 👑</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-nav">
+          <button class="slide-btn slide-prev" id="slidePrevBtn" aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="slide-dots" id="slideDots">
+            <span class="slide-dot active" data-dot="0"></span>
+            <span class="slide-dot" data-dot="1"></span>
+            <span class="slide-dot" data-dot="2"></span>
+            <span class="slide-dot" data-dot="3"></span>
+          </div>
+          <button class="slide-btn slide-next" id="slideNextBtn" aria-label="Next photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- SCENE 4: GALAXY -->
+    <section class="section-container story-scene galaxy-section reveal-section" id="galaxySection">
+      <div class="section-badge">⭐ Written in the Stars</div>
+      <h2 class="section-title galaxy-title">A Constellation of Devotion</h2>
+      <div class="galaxy-container" id="galaxyContainer">
+        <canvas id="galaxyCanvas"></canvas>
+        <div class="galaxy-stars-layer" id="galaxyStarsLayer"></div>
+        <div class="galaxy-reason-display" id="galaxyReasonDisplay">
+          <div class="galaxy-reason-icon" id="galaxyReasonIcon">⭐</div>
+          <div class="galaxy-reason-text" id="galaxyReasonText">Tap any star ✨</div>
+        </div>
+      </div>
+      <button class="aesthetic-scroll-btn" onclick="scrollToNextSection(this)" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- SCENE 5: LOVE LETTER -->
+    <section class="section-container story-scene reveal-section" id="letterSection">
+      <div class="section-badge">💌 Ink & Eternal Devotion</div>
+      <h2 class="section-title">A Parchment for Thy Eyes Alone</h2>
+      <div class="envelope-stage">
+        <div class="envelope-3d" id="envelope3d">
+          <div class="envelope-back"></div>
+          <div class="letter-paper" id="letterPaper">
+            <div class="letter-decorline"></div>
+            <div class="letter-stamp">💖</div>
+            <div class="letter-date" id="letterCurrentDate">October 18, 2026</div>
+            <div class="letter-salutation">My Dearest and Most Cherished <span id="letterNamePlaceholder">Love</span>,</div>
+            <div class="letter-content" id="letterBodyContent">
+              How does one put a universe into words when the universe itself has taken the shape of a person? I have tried, you know. I have searched for the loveliest sentences, borrowed the language of poets, and wandered through the pages of novels, hoping to find something beautiful enough to describe you. And yet, every word seems to fall a little short, every metaphor a little pale. Perhaps that is the trouble with loving someone as dearly as I love you!<br><br>
+              Happy Birthday, love! My most fav girl, my 10/10 bodmayesh meye! You are the dream my heart holds dear, the sunshine that graces my every day, the dream I scarcely dared to dream, my sweetest reverie, and the loveliest chapter in a story I never wish to end.<br><br>
+              My love, I wish I could lend you my eyes for a little while, so you could see yourself the way I see you. Maybe then you would understand why the moon feels a little less lonely when I think of you, why the sunshine feels warmer, and why even the most ordinary moments feel special just because you cross my mind.<br><br>
+              I wish I could place the entire universe in your hands, with every star tucked between your fingers, just to show you how much you mean to me. But since I cannot, all I can do is give you my heart and whisper, “Take my hand, take my whole life too, for I can’t help falling in love with you.”<br><br>
+              You are in my heart, and you shall be there forever. My greatest wish is that whenever you think of me, you feel as happy as I do whenever I think of you!<br><br>
+              Peace, love, blessings, and a very happi birthday, babygurl! ❤️
+            </div>
+            <div class="letter-signature">
+              <span class="sig-handwriting" id="letterSignature">Your love, Taosif</span>
+            </div>
+            <div class="letter-decorline letter-decorline-bottom"></div>
+          </div>
+          <div class="envelope-front-left"></div>
+          <div class="envelope-front-right"></div>
+          <div class="envelope-front-bottom"></div>
+          <div class="envelope-flap" id="envelopeFlap"></div>
+          <div class="wax-seal" id="waxSeal" title="Royal Wax Seal">
+            <div class="seal-ring"></div>
+            <div class="seal-heart">💝</div>
+          </div>
+          <div class="seal-crack-particles" id="sealCrackParticles"></div>
+        </div>
+        <div id="letterPromptText" class="hidden"></div>
+      </div>
+    </section>
+
+    <!-- Fullscreen Letter Modal -->
+    <div class="fullscreen-letter-modal hidden" id="fullscreenLetterModal">
+      <div class="fullscreen-letter-backdrop" id="letterModalBackdrop"></div>
+      <div class="fullscreen-letter-container glass-card" id="fullscreenLetterContainer">
+        <button class="fullscreen-letter-close" id="closeLetterModalBtn" aria-label="Close letter">&times;</button>
+        <div class="stationery-paper">
+          <div class="stationery-border">
+            <div class="stationery-header">
+              <div class="stationery-stamp">
+                <span class="stamp-heart">💖</span>
+                <span class="stamp-text">ROYAL POST</span>
+              </div>
+              <div class="stationery-postmark">
+                <span class="postmark-circle">SEALED WITH BOUNDLESS LOVE</span>
+                <span class="stationery-date" id="modalLetterDate">This Glorious Day ✨</span>
+              </div>
+            </div>
+            <div class="stationery-salutation">
+              My Dearest & Most Exquisite <span id="modalRecipientName">Love</span>,
+            </div>
+            <div class="stationery-body" id="modalLetterBody">
+              How does one put a universe into words when the universe itself has taken the shape of a person? I have tried, you know. I have searched for the loveliest sentences, borrowed the language of poets, and wandered through the pages of novels, hoping to find something beautiful enough to describe you. And yet, every word seems to fall a little short, every metaphor a little pale. Perhaps that is the trouble with loving someone as dearly as I love you!<br><br>
+              Happy Birthday, love! My most fav girl, my 10/10 bodmayesh meye! You are the dream my heart holds dear, the sunshine that graces my every day, the dream I scarcely dared to dream, my sweetest reverie, and the loveliest chapter in a story I never wish to end.<br><br>
+              My love, I wish I could lend you my eyes for a little while, so you could see yourself the way I see you. Maybe then you would understand why the moon feels a little less lonely when I think of you, why the sunshine feels warmer, and why even the most ordinary moments feel special just because you cross my mind.<br><br>
+              I wish I could place the entire universe in your hands, with every star tucked between your fingers, just to show you how much you mean to me. But since I cannot, all I can do is give you my heart and whisper, “Take my hand, take my whole life too, for I can’t help falling in love with you.”<br><br>
+              You are in my heart, and you shall be there forever. My greatest wish is that whenever you think of me, you feel as happy as I do whenever I think of you!<br><br>
+              Peace, love, blessings, and a very happi birthday, babygurl! ❤️
+            </div>
+            <div class="stationery-closing">
+              <div class="closing-sign" id="modalLetterSignature">Your love, Taosif</div>
+            </div>
+            <div class="stationery-wax-badge"><span class="badge-seal-heart">❤️</span></div>
+            <div class="stationery-actions">
+              <button class="glow-btn btn-primary stationery-done-btn" id="doneLetterBtn"><span>Keep Close to Heart ❤️</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-heart">💖</div>
+      <p class="footer-text">Your love, Taosif</p>
+    </footer>
+
+  </div><!-- end .site-wrapper -->
+
+  <!-- Personalization Modal -->
+  <div class="modal-backdrop hidden" id="settingsModal">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3>✨ Personalize Thy Keepsake</h3>
+        <button class="close-modal-btn" id="closeSettingsBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputHerName">Her Fair Name</label>
+          <input type="text" id="inputHerName" placeholder="e.g. Love, My Angel, Cordelia">
+        </div>
+        <div class="form-group">
+          <label for="inputBirthdayDate">Date of Her Nativity</label>
+          <input type="date" id="inputBirthdayDate" value="2005-04-18">
+        </div>
+        <div class="form-group">
+          <label for="inputLetterText">Thy Epistle of Devotion</label>
+          <textarea id="inputLetterText" rows="6" placeholder="Pen thy tender words here..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="inputSignature">Thy Devoted Signature</label>
+          <input type="text" id="inputSignature" placeholder="e.g. Forever Thine, With All My Soul ❤️">
+        </div>
+        <div class="modal-actions">
+          <button class="glow-btn btn-secondary" id="resetDefaultsBtn">Reset</button>
+          <button class="glow-btn btn-primary" id="saveSettingsBtn">Save ✨</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Galaxy Constellation Complete Overlay -->
+  <div class="constellation-complete hidden" id="constellationComplete">
+    <div class="constellation-msg glass-card">
+      <div class="const-emoji">🌟💖✨</div>
+      <h3>All For You ✨</h3>
+      <p>Out of everything in this world, having you in my life is the greatest thing. Happy Birthday, my love! 🌸</p>
+      <button class="glow-btn btn-primary" onclick="document.getElementById('constellationComplete').classList.add('hidden')">Close with Love ❤️</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
