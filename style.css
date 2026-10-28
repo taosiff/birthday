@@ -1576,11 +1576,9 @@ h1, h2, h3 {
   background-size: 20px 20px, 100% 100%;
 }
 .stationery-border {
-  border: 2px solid rgba(212, 175, 55, 0.45);
-  outline: 2px solid rgba(212, 175, 55, 0.2);
-  outline-offset: 2px;
+  border: 1px solid rgba(244, 114, 182, 0.35);
   border-radius: 12px;
-  padding: clamp(14px, 2vh, 22px) clamp(10px, 2vw, 16px);
+  padding: clamp(14px, 2vh, 24px) clamp(12px, 2vw, 20px);
   position: relative;
   box-sizing: border-box;
 }
@@ -1590,34 +1588,30 @@ h1, h2, h3 {
   justify-content: space-between;
   margin-bottom: 14px;
   padding-bottom: 10px;
-  border-bottom: 1px dashed rgba(212, 175, 55, 0.4);
+  border-bottom: 1px solid rgba(244, 114, 182, 0.2);
 }
 .stationery-stamp {
   display: inline-flex;
-  flex-direction: column;
   align-items: center;
-  padding: 3px 8px;
-  border: 2px dashed #DC2626;
-  border-radius: 6px;
-  background: #FEF2F2;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid rgba(225, 29, 72, 0.2);
+  border-radius: 20px;
+  background: rgba(254, 242, 242, 0.7);
 }
-.stamp-heart { font-size: 1.1rem; }
-.stamp-text { font-size: 0.6rem; font-weight: 800; color: #DC2626; letter-spacing: 1px; }
+.stamp-heart { font-size: 1rem; }
+.stamp-text { font-size: 0.68rem; font-weight: 700; color: #BE123C; letter-spacing: 0.5px; }
 .stationery-postmark {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
 }
 .postmark-circle {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: #B45309;
+  display: none;
 }
 .stationery-date {
   font-family: var(--font-hand);
-  font-size: 1rem;
-  color: #78350F;
+  font-size: 1.05rem;
+  color: #881337;
 }
 .stationery-salutation {
   font-family: var(--font-serif);

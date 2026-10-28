@@ -1525,7 +1525,7 @@ function initLoveLetter() {
     if (waxSeal) waxSeal.classList.add("cracked");
     if (flap) flap.classList.add("open");
     if (paper) paper.classList.add("pulled");
-    if (promptText) promptText.textContent = "💖 Sealed with love 💖";
+    if (promptText) promptText.textContent = "💖 From my heart to yours 💖";
 
     if (window.confetti) {
       confetti({
@@ -1616,12 +1616,12 @@ function initMascot() {
   if (!mascot || !speech) return;
 
   const QUOTES = [
-    "A most radiant birthday to thee, my fairest lady! Tap upon me! 💖",
-    "Thou dost eclipse the morning sun in sheer, effortless splendour! ✨",
-    "May gentle Providence bestow upon thee every quiet desire of thy soul! 🌸",
-    "Never has a mortal soul been more profoundly, wholly cherished! 💕",
-    "Partake freely in sweet confections; today, the world bows to thee! 🎂",
-    "Thy humble admirer, thy devoted captive, now and forevermore! 👑"
+    "Happy Birthday, Rumnaz! Tap me for more love! 💖",
+    "You light up every room you walk into! ✨",
+    "Wishing you the sweetest, happiest year ahead! 🌸",
+    "You are so deeply loved, today and always! 💕",
+    "Enjoy all the cake and treats today, birthday girl! 🎂",
+    "Forever your biggest fan and admirer! ❤️"
   ];
   let quoteIdx = 0;
 
